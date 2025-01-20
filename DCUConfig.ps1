@@ -28,7 +28,7 @@
         Author: https://github.com/iGalxz
         Date: 10/18/2024
         Version: 1
-        Script Name: DCUConfigv2.ps1
+        Script Name: DCUConfig.ps1
         Additional Notes:
 
     .LINK
@@ -38,9 +38,6 @@
         try {
             # Simulate some process
             Write-Log -Message "Performing an operation..." -LogLevel "Info"
-    
-            # Simulating an operation that may throw an exception
-            $result = 1 / 0  # This will cause a division by zero error
 
             Write-Log -Message "Operation completed successfully." -LogLevel "Info"
         } catch {
