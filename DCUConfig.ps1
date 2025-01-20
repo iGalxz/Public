@@ -163,7 +163,7 @@ if($PCManufacturer -like "*Dell*")
 else{
 #If not detected as Dell, write to log
     Write-Log -Message "Dell was not detected as the Manufacturer of the device."
-    break
+    exit
 }
 
     Write-Log -Message "
