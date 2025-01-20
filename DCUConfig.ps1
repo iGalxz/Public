@@ -157,7 +157,7 @@ if($PCManufacturer -like "*Dell*")
     {
     #Catch any errors and write to log
         Write-Log -Message "An error occurred: $_" -Loglevel Error
-        break
+        exit
     }
 }
 else{
