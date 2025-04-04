@@ -1,3 +1,5 @@
+#Creates a persistent registry hive to store collected printer information to, and gives authenticated users permissions to write/read/modify to the hive
+
 #If the registry entry doesn't already exist, create it
   if (!(Test-Path HKLM:\SOFTWARE\WOW6432Node\SCCMINVENTORY)) {new-item HKLM:\SOFTWARE\WOW6432Node\SCCMINVENTORY  -ErrorAction SilentlyContinue}
 #Allocate permissoins of this registry key to all authenticated users, this is needed for the write script as the information being queried is only available in the context of the user
