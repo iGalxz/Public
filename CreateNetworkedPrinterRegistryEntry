@@ -1,0 +1,10 @@
+#If the registry entry doesn't already exist, create it
+  if (!(Test-Path HKLM:\SOFTWARE\WOW6432Node\SCCMINVENTORY)) {new-item HKLM:\SOFTWARE\WOW6432Node\SCCMINVENTORY  -ErrorAction SilentlyContinue}
+#Allocate permissoins of this registry key to all authenticated users, this is needed for the write script as the information being queried is only available in the context of the user
+  $perm = get-acl HKLM:\SOFTWARE\WOW6432Node\SCCMINVENTORY -ErrorAction SilentlyContinue 
+  $rule = New-Object System.Security.AccessControl.RegistryAccessRule("Authenticated Users","FullControl", "ContainerInherit, ObjectInherit", "InheritOnly", "Allow")  -ErrorAction SilentlyContinue 
+    $perm.SetAccessRule($rule)
+
+Set-Acl -Path HKLM:\SOFTWARE\WOW6432Node\SCCMINVENTORY $perm -ErrorAction SilentlyContinue 
+
+if (!(Test-Path HKLM:\SOFTWARE\WOW6432Node\SCCMINVENTORY\NETWORKPRINTERS)) {new-item HKLM:\SOFTWARE\WOW6432Node\SCCMINVENTORY\NETWORKPRINTERS -ErrorAction SilentlyContinue}
