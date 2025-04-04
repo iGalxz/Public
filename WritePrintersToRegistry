@@ -1,0 +1,23 @@
+
+$printers = Get-WMIObject -class Win32_Printer -ErrorAction SilentlyContinue|select-Object -Property ServerName,ShareName,DriverName,PortName -ErrorAction SilentlyContinue 
+ForEach($printer in $printers){ 
+    $PServerName= $printer.ServerName -replace ('\\','') 
+    $PShareName = $printer.ShareName 
+    $PLocation = $printer.Location 
+    $PDriverName = $printer.DriverName 
+    $PPortName = $printer.PortName 
+    if ((Test-Path HKLM:\SOFTWARE\WOW6432Node\SCCMINVENTORY\NETWORKPRINTERS)) { 
+        if ((Test-Path "HKLM:\SOFTWARE\WOW6432Node\SCCMINVENTORY\NETWORKPRINTERS\$PShareName on $PServerName")) { 
+            Remove-item "HKLM:\SOFTWARE\WOW6432Node\SCCMINVENTORY\NETWORKPRINTERS\$PShareName on $PServerName" -Force -ErrorAction SilentlyContinue 
+        }
+        if (-not [string]::IsNullOrEmpty($PShareName))
+        {
+        New-item "HKLM:\SOFTWARE\WOW6432Node\SCCMINVENTORY\NETWORKPRINTERS\$PShareName on $PServerName" -ErrorAction SilentlyContinue 
+        New-ItemProperty "HKLM:\SOFTWARE\WOW6432Node\SCCMINVENTORY\NETWORKPRINTERS\$PShareName on $PServerName" -Name "PrintServer" -Value $PServerName -PropertyType "String" -ErrorAction SilentlyContinue 
+        New-ItemProperty "HKLM:\SOFTWARE\WOW6432Node\SCCMINVENTORY\NETWORKPRINTERS\$PShareName on $PServerName" -Name "PrinterShare" -Value $PShareName -PropertyType "String" -ErrorAction SilentlyContinue 
+        New-ItemProperty "HKLM:\SOFTWARE\WOW6432Node\SCCMINVENTORY\NETWORKPRINTERS\$PShareName on $PServerName" -Name "PrinterLocation" -Value $PLocation -PropertyType "String" -ErrorAction SilentlyContinue 
+        New-ItemProperty "HKLM:\SOFTWARE\WOW6432Node\SCCMINVENTORY\NETWORKPRINTERS\$PShareName on $PServerName" -Name "PrinterDriver" -Value $PDriverName -PropertyType "String" -ErrorAction SilentlyContinue  
+        New-ItemProperty "HKLM:\SOFTWARE\WOW6432Node\SCCMINVENTORY\NETWORKPRINTERS\$PShareName on $PServerName" -Name "PrinterPortName" -Value $PPortName -PropertyType "String" -ErrorAction SilentlyContinue 
+        New-ItemProperty "HKLM:\SOFTWARE\WOW6432Node\SCCMINVENTORY\NETWORKPRINTERS\$PShareName on $PServerName" -Name "DateInventoried" -Value $(get-date) -PropertyType "String" -ErrorAction SilentlyContinue 
+    }
+}}
