@@ -1,0 +1,13 @@
+#pragma namespace ("\\\\.\\root\\cimv2")
+#pragma deleteclass("NETWORKPRINTERS", NOFAIL)
+[dynamic, provider("RegProv"), ClassContext("Local|HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\SCCMINVENTORY\\NETWORKPRINTERS")]
+Class NETWORKPRINTERS
+{
+[key] string KeyName;
+[PropertyContext("PrintServer")] String PrintServer;
+[PropertyContext("PrinterShare")] String PrinterShare;
+[PropertyContext("PrinterLocation")] String PrinterLocation;
+[PropertyContext("PrinterDriver")] String PrinterDriver;
+[PropertyContext("PrinterPortName")] String PrinterPortName;
+[PropertyContext("DateInventoried")] String DateInventoried;
+};
