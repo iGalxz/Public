@@ -1,3 +1,4 @@
+#Pushed on a cycle via package to periodically update the stored information of local users configured networked printers
 
 $printers = Get-WMIObject -class Win32_Printer -ErrorAction SilentlyContinue|select-Object -Property ServerName,ShareName,DriverName,PortName -ErrorAction SilentlyContinue 
 ForEach($printer in $printers){ 
